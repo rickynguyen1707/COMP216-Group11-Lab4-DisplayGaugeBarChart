@@ -41,25 +41,23 @@ class Meter(tk.Frame):
         self.canvas.create_text(92,15,font="Times 20 italic bold", text="s o", fill='black')
         self.canvas.create_text(123,15,font="Times 20 italic bold", text="l i", fill='black')
         self.canvas.create_text(158,15,font="Times 20 italic bold", text="n e", fill='green')
-        #self.canvas.create_text(167,15,font="Times 20 italic bold", text="re", fill='red')
-        self.canvas.create_text(40,78,font="Times 12 bold", text=low_r)
+        self.canvas.create_text(40,78,font="Times 12 bold", text=low_r, fill='red')
         self.canvas.create_text(152,78,font="Times 12 bold", text=hi_r)
 
         self.canvas.pack(fill='both')
-        #self.scale.pack()
         self.label.pack()
         self.entry.pack()
     
 
-        self.var.trace_add('write', self.updateMeter)  # if this line raises an error, change it to the old way of adding a trace: self.var.trace('w', self.updateMeter)
+        self.var.trace_add('write', self.updateMeter)
         self.updateMeterTimer()
 
     def updateMeterLine(self, a, l=0):
         """Draw a meter line (and recurse for lighter ones...)"""
         oldangle = self.angle[l]
         self.angle[l] = a
-        x = 100 - 90 * cos(a * pi)
-        y = 100 - 90 * sin(a * pi)
+        x = 100 - 70 * cos(a * pi)
+        y = 100 - 70 * sin(a * pi)
         self.canvas.coords(self.meter[l], 100, 100, x, y)
         l += 1
         if l < len(self.meter):
@@ -70,7 +68,7 @@ class Meter(tk.Frame):
         mini = self.scale.cget('from')
         maxi = self.scale.cget('to')
         pos = (self.var.get() - mini) / (maxi - mini)
-        self.updateMeterLine(pos * 0.6 + 0.2)
+        self.updateMeterLine(pos * 0.789 + 0.1)
 
     def updateMeterTimer(self):
         """Fade over time"""
