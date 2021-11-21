@@ -23,7 +23,7 @@ class Meter(tk.Frame):
                                 borderwidth=2, relief='sunken',
                                 bg='grey')
         self.scale = tk.Scale(self, orient='horizontal', from_=0, to=100, variable=self.var)
-        self.label = tk.Label(root, text = 'Desired Temp', font=('calibre',10, 'bold'))
+        self.label = tk.Label(root, text = 'Desired Fuel', font=('calibre',10, 'bold'))
         self.entry = tk.Entry(root,textvariable=self.temp, font=('calibre',10,'normal'))
     
 
