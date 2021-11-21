@@ -1,30 +1,26 @@
-import tkinter as tk
+import tkinter as Gauge
 from math import pi, cos, sin
 
+low_r = 0
+hi_r = 100
+root = Gauge.Tk()
+root.title("Gauge")
 
-low_r = 0 # chart low range
-hi_r = 100 # chart hi range
-root = tk.Tk()
-name_var=tk.IntVar()
-name_var=1
-
-
-
-class Meter(tk.Frame):
+class Meter(Gauge.Frame):
     def __init__(self, master=None, **kw):
-        tk.Frame.__init__(self, master, **kw)
+        Gauge.Frame.__init__(self, master, **kw)
 
         self.meter = []
         self.angle = []
-        self.temp = tk.IntVar(self, 0)
-        self.var = tk.IntVar(self, 0)
+        self.temp = Gauge.IntVar(self, 0)
+        self.var = Gauge.IntVar(self, 0)
 
-        self.canvas = tk.Canvas(self, width=200, height=160,
+        self.canvas = Gauge.Canvas(self, width=200, height=160,
                                 borderwidth=2, relief='sunken',
                                 bg='grey')
-        self.scale = tk.Scale(self, orient='horizontal', from_=0, to=100, variable=self.var)
-        self.label = tk.Label(root, text = 'Desired Fuel', font=('calibre',10, 'bold'))
-        self.entry = tk.Entry(root,textvariable=self.temp, font=('calibre',10,'normal'))
+        self.scale = Gauge.Scale(self, orient='horizontal', from_=0, to=100, variable=self.var)
+        self.label = Gauge.Label(root, text = 'Desired Fuel', font=('calibre',10, 'bold'))
+        self.entry = Gauge.Entry(root,textvariable=self.temp, font=('calibre',10,'normal'))
     
 
         for j, i in enumerate(range(0, 100, 5)):
@@ -45,14 +41,13 @@ class Meter(tk.Frame):
         self.canvas.create_text(40,78,font="Times 12 bold", text=low_r, fill='red')
         self.canvas.create_text(152,78,font="Times 12 bold", text=hi_r)
 
-        self.btn = tk.Button(root,text='Start',command=self.updateVariableFromEntry)
+        self.btn = Gauge.Button(root,text='Start',command=self.updateVariableFromEntry)
 
         self.canvas.pack(fill='both')
         self.label.pack()
         self.entry.pack()
         self.btn.pack()
     
-
         self.var.trace_add('write', self.updateMeter)
         self.updateMeterTimer()
 
