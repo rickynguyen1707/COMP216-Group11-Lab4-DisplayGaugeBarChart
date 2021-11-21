@@ -16,6 +16,7 @@ class Meter(tk.Frame):
 
         self.meter = []
         self.angle = []
+        self.temp = tk.IntVar(self, 0)
         self.var = tk.IntVar(self, 0)
 
         self.canvas = tk.Canvas(self, width=200, height=160,
@@ -23,7 +24,7 @@ class Meter(tk.Frame):
                                 bg='grey')
         self.scale = tk.Scale(self, orient='horizontal', from_=0, to=100, variable=self.var)
         self.label = tk.Label(root, text = 'Desired Temp', font=('calibre',10, 'bold'))
-        self.entry = tk.Entry(root,textvariable=self.var, font=('calibre',10,'normal'))
+        self.entry = tk.Entry(root,textvariable=self.temp, font=('calibre',10,'normal'))
     
 
         for j, i in enumerate(range(0, 100, 5)):
@@ -44,9 +45,12 @@ class Meter(tk.Frame):
         self.canvas.create_text(40,78,font="Times 12 bold", text=low_r, fill='red')
         self.canvas.create_text(152,78,font="Times 12 bold", text=hi_r)
 
+        self.btn = tk.Button(root,text='Start',command=self.updateVariableFromEntry)
+
         self.canvas.pack(fill='both')
         self.label.pack()
         self.entry.pack()
+        self.btn.pack()
     
 
         self.var.trace_add('write', self.updateMeter)
@@ -75,10 +79,10 @@ class Meter(tk.Frame):
         self.var.set(self.var.get())
         self.after(20, self.updateMeterTimer)
 
+    def updateVariableFromEntry(self):
+        self.var.set(self.temp.get())
 
 if __name__ == '__main__':
     meter = Meter(root)
     meter.pack()
-    btn = tk.Button(root,text="Start",command=meter.updateMeterTimer)
-    btn.pack()
     root.mainloop()
