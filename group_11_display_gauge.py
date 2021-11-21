@@ -52,7 +52,6 @@ class Meter(Gauge.Frame):
         self.updateMeterTimer()
 
     def updateMeterLine(self, a, l=0):
-        """Draw a meter line (and recurse for lighter ones...)"""
         oldangle = self.angle[l]
         self.angle[l] = a
         x = 100 - 70 * cos(a * pi)
@@ -63,14 +62,12 @@ class Meter(Gauge.Frame):
             self.updateMeterLine(oldangle, l)
 
     def updateMeter(self, name1, name2, op):
-        """Convert variable to angle on trace"""
         mini = self.scale.cget('from')
         maxi = self.scale.cget('to')
         pos = (self.var.get() - mini) / (maxi - mini)
         self.updateMeterLine(pos * 0.789 + 0.1)
 
     def updateMeterTimer(self):
-        """Fade over time"""
         self.var.set(self.var.get())
         self.after(20, self.updateMeterTimer)
 
